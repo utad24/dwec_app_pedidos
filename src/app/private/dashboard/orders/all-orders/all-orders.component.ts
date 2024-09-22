@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OrdersTableComponent } from "../../../../shared/components/orders-table/orders-table.component";
+import { Order, OrderResponse } from '../../../../shared/models/order';
+import { OrdersService } from '../../../../shared/services/orders.service';
 
 @Component({
   selector: 'app-all-orders',
@@ -7,6 +9,23 @@ import { OrdersTableComponent } from "../../../../shared/components/orders-table
   imports: [OrdersTableComponent],
   templateUrl: './all-orders.component.html',
 })
-export class AllOrdersComponent {
+export class AllOrdersComponent implements OnInit {
+
+  orders: Order[] = [];
+
+  constructor(private ordersService: OrdersService) {
+
+  }
+
+  ngOnInit(): void {
+    this.ordersService.getOrders().subscribe({
+      next: (orders: OrderResponse) => {
+        this.orders = orders.data || [];
+      },
+      error: (error) => {
+        console.error('Error fetching orders:', error);
+      }
+    });
+  }
 
 }
