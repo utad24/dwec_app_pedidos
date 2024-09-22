@@ -18,6 +18,10 @@ export class AllOrdersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getOrders();
+  }
+
+  getOrders() {
     this.ordersService.getOrders().subscribe({
       next: (orders: OrderResponse) => {
         this.orders = orders.data || [];
@@ -27,5 +31,7 @@ export class AllOrdersComponent implements OnInit {
       }
     });
   }
+
+
 
 }

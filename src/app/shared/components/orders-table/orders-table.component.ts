@@ -14,9 +14,14 @@ import { Alert } from '../../models/alert';
 export class OrdersTableComponent implements OnInit {
 
   @Input() orders: Order[] = [];
+
+  updateOrders = output<void>();
+
   alertData: Alert = new Alert();
 
   orderSelected: Order | null = null;
+
+  constructor(private ordersService: OrdersService) { }
 
   ngOnInit(): void {
 
@@ -39,10 +44,16 @@ export class OrdersTableComponent implements OnInit {
   }
 
   makeAction() {
-    if (this.alertData.action === "delete") {
+    if (this.alertData.action === "delete" && this.orderSelected) {
       // DELETE ORDER
-      this.alertData.show = false;
-      this.orderSelected = null;
+      const id = this.orderSelected?.documentId?.toString() ?? "";
+      this.ordersService.deleteOrder(id).subscribe(() => {
+        this.alertData.show = false;
+        this.orderSelected = null;
+
+        // Informamos al componente padre que se hay que actualizar la lista de pedidos
+        this.updateOrders.emit();
+      });
     }
   }
 

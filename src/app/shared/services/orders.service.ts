@@ -15,4 +15,8 @@ export class OrdersService {
     return this.http.get<OrderResponse>(`${environment.apiUrl}/orders`, { params });
   }
 
+  deleteOrder(id: string) {
+    return this.http.delete(`${environment.apiUrl}/orders/${id}`);
+  }
+
 }
