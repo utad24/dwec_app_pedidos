@@ -1,3 +1,13 @@
 <div class="p-6">
-    <app-orders-table [orders]="orders" (updateOrders)="getOrders()"></app-orders-table>
+    @defer (when orders) {
+        <app-orders-table [orders]="orders" (updateOrders)="getOrders()"></app-orders-table>
+    } @loading (after 100ms; minimum 500ms) {
+        <div class="flex justify-center items-center h-screen w-full">
+            <div class="spinner-border text-primary" role="status">
+                <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500">
+                </div>
+                <p class="mt-2 text-gray-600">Cargando...</p>
+            </div>
+        </div>
+    }
 </div>
