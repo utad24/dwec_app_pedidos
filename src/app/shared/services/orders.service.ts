@@ -19,4 +19,13 @@ export class OrdersService {
     return this.http.delete(`${environment.apiUrl}/orders/${id}`);
   }
 
+  updateOrderStatus(id: string, status: string) {
+    const data = {
+      data: {
+        orderStatus: status
+      }
+    }
+    return this.http.put(`${environment.apiUrl}/orders/${id}`, data);
+  }
+
 }

@@ -4,11 +4,12 @@ import { Order } from '../../models/order';
 import { ConfirmationDialogComponent } from "../confirmation-dialog/confirmation-dialog.component";
 import { DatePipe } from '@angular/common';
 import { Alert } from '../../models/alert';
+import { StatusDialogComponent } from "../status-dialog/status-dialog.component";
 
 @Component({
   selector: 'app-orders-table',
   standalone: true,
-  imports: [OrdersTableComponent, DatePipe, ConfirmationDialogComponent],
+  imports: [OrdersTableComponent, DatePipe, ConfirmationDialogComponent, StatusDialogComponent],
   templateUrl: './orders-table.component.html'
 })
 export class OrdersTableComponent implements OnInit {
@@ -57,4 +58,28 @@ export class OrdersTableComponent implements OnInit {
     }
   }
 
+  updateOrder(order: Order) {
+    this.orderSelected = order;
+
+    this.alertData = {
+      show: true,
+      title: "Actualizar pedido",
+      message: "Seleccione el nuevo estado del pedido",
+      action: "status",
+      isDestructive: false
+    }
+  }
+
+  updateStatus(status: string) {
+    if (this.orderSelected) {
+      const id = this.orderSelected?.documentId?.toString() ?? "";
+      this.ordersService.updateOrderStatus(id, status).subscribe(() => {
+        this.alertData.show = false;
+        this.orderSelected = null;
+
+        // Informamos al componente padre que se hay que actualizar la lista de pedidos
+        this.updateOrders.emit();
+      });
+    }
+  }
 }
