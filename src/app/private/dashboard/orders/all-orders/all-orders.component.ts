@@ -7,7 +7,7 @@ import { AsyncPipe } from '@angular/common';
 @Component({
   selector: 'app-all-orders',
   standalone: true,
-  imports: [OrdersTableComponent, AsyncPipe],
+  imports: [OrdersTableComponent],
   templateUrl: './all-orders.component.html',
 })
 export class AllOrdersComponent implements OnInit {
