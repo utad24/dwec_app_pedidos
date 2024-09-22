@@ -5,11 +5,12 @@ import { ConfirmationDialogComponent } from "../confirmation-dialog/confirmation
 import { DatePipe } from '@angular/common';
 import { Alert } from '../../models/alert';
 import { StatusDialogComponent } from "../status-dialog/status-dialog.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-orders-table',
   standalone: true,
-  imports: [OrdersTableComponent, DatePipe, ConfirmationDialogComponent, StatusDialogComponent],
+  imports: [OrdersTableComponent, DatePipe, ConfirmationDialogComponent, StatusDialogComponent, RouterLink],
   templateUrl: './orders-table.component.html'
 })
 export class OrdersTableComponent implements OnInit {

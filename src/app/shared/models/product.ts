@@ -1,3 +1,4 @@
+import { Meta } from "@angular/platform-browser";
 
 export interface Product {
     id?: number;
@@ -8,4 +9,9 @@ export interface Product {
     updatedAt?: Date;
     publishedAt?: Date;
     locale?: null;
+}
+
+export interface ProductResponse {
+    data: Product[];
+    meta: Meta;
 }
