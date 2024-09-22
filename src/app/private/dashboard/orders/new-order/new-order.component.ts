@@ -6,6 +6,7 @@ import { OrdersService } from '../../../../shared/services/orders.service';
 import { ProductService } from '../../../../shared/services/product.service';
 import { Order } from '../../../../shared/models/order';
 import { Router } from '@angular/router';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-new-order',
@@ -19,7 +20,13 @@ export class NewOrderComponent implements OnInit {
 
   productList: Product[] = [];
 
-  constructor(private fb: FormBuilder, private ordersService: OrdersService, private productsService: ProductService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private ordersService: OrdersService,
+    private productsService: ProductService,
+    private router: Router,
+    private toastService: ToastService
+  ) {
     this.orderForm = this.fb.group({
       name: ['', Validators.required],
       address: ['', Validators.required],
@@ -47,10 +54,12 @@ export class NewOrderComponent implements OnInit {
 
       this.ordersService.createOrder(order).subscribe((order) => {
         console.log(order);
+
+        this.toastService.showToast('Pedido creado correctamente');
         this.router.navigate(['/admin/orders']);
       });
     } else {
-      alert('Formulario inválido');
+      this.toastService.showToast('Formulario no válido', false);
       console.log('Formulario inválido');
     }
   }
