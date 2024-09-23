@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastComponent } from "../../shared/components/toast/toast.component";
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,4 +11,9 @@ import { ToastComponent } from "../../shared/components/toast/toast.component";
 })
 export class DashboardComponent {
 
+  constructor(private authService: AuthService) { }
+
+  logout() {
+    this.authService.logout();
+  }
 }

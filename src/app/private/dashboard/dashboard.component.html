@@ -1,7 +1,6 @@
 <div class="relative z-50">
     <div class="mx-auto ml-60 overflow-x-auto inset-0 min-h-screen bg-slate-100">
         <router-outlet />
-        <toast></toast>
     </div>
     <nav class="fixed top-0 left-0 bottom-0 flex flex-col w-60 bg-slate-900 border-r overflow-y-auto">
         <div class="flex w-full text-white px-6  h-24 items-center justify-center">
@@ -33,9 +32,9 @@
             </ul>
 
             <div class="py-4 text-sm">
-                <a
+                <button
                     class="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-red-500/10 hover:text-red-500 rounded-xl"
-                    href="#"
+                    (click)="logout()"
                 >
                     <span class="inline-block mr-4">
                         <svg
@@ -51,7 +50,7 @@
                         </svg>
                     </span>
                     <span>Cerrar sesión</span>
-                </a>
+                </button>
             </div>
         </div>
     </nav>
