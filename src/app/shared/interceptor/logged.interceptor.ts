@@ -10,23 +10,21 @@ export const loggedInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
 
   if (authService.isAuthenticated() && !req.url.includes('auth')) {
-    const token = authService.getToken(); // Retrieve the token from the auth service
-    if (token) { // Ensure the token is not null or undefined
+    const token = authService.getToken();
+    if (token) {
       const clonedRequest = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log('Interceptor: token added');
+
       return next(clonedRequest)
         .pipe(
           catchError((error: HttpErrorResponse) => {
             if (error.status === 401) {
-              // Handle 401 error
+              // Handle 401 error, cuando el token expira
               console.error('Unauthorized request - redirecting to login');
-              authService.logout(); // Optionally, log out the user
-              // Redirect to login page or show a login modal
-
+              authService.logout();
               router.navigate(['/']);
             }
             return throwError(() => {
@@ -35,11 +33,8 @@ export const loggedInterceptor: HttpInterceptorFn = (req, next) => {
             });
           })
         );
-    } else {
-      console.error('Token is null or undefined');
     }
   }
 
-  console.warn('Interceptor');
   return next(req)
 };
